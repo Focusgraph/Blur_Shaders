@@ -7,8 +7,7 @@ uniform sampler2D u_texture_0; //Texture binded through settings.json
 
 void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution;
-
-
+    
     vec2 blurResolution = vec2(640, 640);
     //Calculating the size of a single texel in UV coordinates
     vec2 texelSize = 1.0 / blurResolution; 
