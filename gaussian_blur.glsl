@@ -8,18 +8,14 @@ uniform sampler2D u_texture_0; //Texture binded through settings.json
 void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution;
 
-    //vec4 texture = texture2D(u_texture_0, uv); //Reading and storing the texture in a variable
-    //vec3 color = texture.rgb; //Vec4 to Vec3 conversion
 
-    //Original image resolution: 2560 x 2560
-    vec2 imageResolution = vec2(640, 640);
-    vec2 texelSize = 1.0 / imageResolution; //Calculating the size of a single texel in UV coordinates
+    vec2 blurResolution = vec2(640, 640);
+    //Calculating the size of a single texel in UV coordinates
+    vec2 texelSize = 1.0 / blurResolution; 
 
-    
-
-    //Gaussian kernel weights
     vec3 gaussianBlurColor = vec3(0.0, 0.0, 0.0);
 
+    //Gaussian kernel weights
     mat3 kernel = mat3(
         1, 2, 1,
         2, 4, 2,
@@ -34,11 +30,9 @@ void main() {
             gaussianBlurColor += texture(u_texture_0, uv + vec2(float(i), float(j)) * texelSize).rgb * weight;
         }
     }
+
     gaussianBlurColor = gaussianBlurColor / kernelSum;
     vec3 color = gaussianBlurColor;
 
     fragColor = vec4(color, 1.0);
-
-
-
 }
